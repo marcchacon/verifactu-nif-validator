@@ -30,9 +30,9 @@ module VerifactuNifValidator
       contribuyente_element.add_child(contribuyente_nif_element)
 
       if contribuyente.name
-        contribuyente_nombre_element = Nokogiri::XML::Node.new('vnif:Nombre', xml_document)
-        contribuyente_nombre_element.content = contribuyente.nombre
-        contribuyente_element.add_child(contribuyente_nombre_element)
+        contribuyente_name_element = Nokogiri::XML::Node.new('vnif:Nombre', xml_document)
+        contribuyente_name_element.content = contribuyente.name
+        contribuyente_element.add_child(contribuyente_name_element)
       end
 
       xml_document.root.add_child(contribuyente_element)
