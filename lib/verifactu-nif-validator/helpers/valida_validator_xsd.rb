@@ -17,7 +17,7 @@ module VerifactuNifValidator
 
         # Cargar el esquema XSD desde el fichero local
         xsd_dir = File.expand_path('../../../../', __FILE__)
-        xsd_path = File.join(xsd_dir, 'VNifV2.xsd')
+        xsd_path = File.join(xsd_dir, 'VNifV2Ent.xsd')
         xsd = VerifactuNifValidator::Helpers::XsdLoader.new(xsd_path).load
 
         # Parsear el XML de entrada

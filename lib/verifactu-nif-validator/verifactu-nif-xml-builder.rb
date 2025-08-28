@@ -9,6 +9,8 @@ module VerifactuNifValidator
       xml_document = Nokogiri::XML('<vnif:VNifV2Ent/>')
       root = xml_document.root
       root.add_namespace_definition('vnif', 'http://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/burt/jdit/ws/VNifV2Ent.xsd')
+      root.add_namespace_definition('xsi', 'http://www.w3.org/2001/XMLSchema-instance')
+      root['xsi:schemaLocation'] = 'https://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/burt/jdit/ws/VNifV2Ent.xsd VNifV2Ent.xsd'
       xml_document.encoding = 'UTF-8'
 
       contribuyentes.each do |contribuyente|
@@ -25,7 +27,7 @@ module VerifactuNifValidator
       raise VerifactuNifValidator::VerifactuNifValidatorError, 'contribuyente must be an instance of VerifactuNifValidator::Contribuyente' unless contribuyente.is_a?(VerifactuNifValidator::Contribuyente)
 
       contribuyente_element = Nokogiri::XML::Node.new('vnif:Contribuyente', xml_document)
-      contribuyente_nif_element = Nokogiri::XML::Node.new('vnif:NIF', xml_document)
+      contribuyente_nif_element = Nokogiri::XML::Node.new('vnif:Nif', xml_document)
       contribuyente_nif_element.content = contribuyente.nif
       contribuyente_element.add_child(contribuyente_nif_element)
 

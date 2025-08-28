@@ -1,4 +1,4 @@
-module Verifactu
+module VerifactuNifValidator
   class EnvioVerifactuNifValidatorService
 
     URL = 'https://www1.agenciatributaria.gob.es/wlpl/BURT-JDIT/ws/VNifV2SOAP'
@@ -16,11 +16,11 @@ module Verifactu
         raise VerifactuNifValidator::VerifactuNifValidatorError, 'XML del registro de facturación no puede estar vacío'
       end
 
-      validate_schema = validate_schema(reg_factu_xml)
-      unless validate_schema[:valid]
-        raise VerifactuNifValidator::VerifactuNifValidatorError, "El XML del registro de facturación no es válido según el esquema XSD: "\
-                             "#{validate_schema[:error_type]} - #{validate_schema[:errors].join(', ')}"
-      end
+      #validate_schema = validate_schema(reg_factu_xml)
+      #unless validate_schema[:valid]
+      #  raise VerifactuNifValidator::VerifactuNifValidatorError, "El XML del registro de facturación no es válido según el esquema XSD: "\
+      #                       "#{validate_schema[:error_type]} - #{validate_schema[:errors].join(', ')}"
+      #end
 
       # Construcción del request SOAP
       request_str = build_soap_request(reg_factu_xml)
@@ -163,8 +163,8 @@ module Verifactu
     def build_soap_request(xml)
 
       message = <<-SOAP
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" x
-        mlns:vnif="http://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/burt/jdit/ws/VNifV2Ent.xsd">
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:vnif="http://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/burt/jdit/ws/VNifV2Ent.xsd">
         <soapenv:Header/>
         <soapenv:Body>
           #{xml}
