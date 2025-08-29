@@ -24,9 +24,10 @@ module VerifactuNifValidator
 
       # Construcción del request SOAP
       request_str = build_soap_request(reg_factu_xml)
-
+      p request_str
       # Envío a Verifactu
-      send_request(url: URL,
+      url = URL
+      send_request(url: url,
                    xml: request_str,
                    client_cert: client_cert,
                    client_key: client_key,
@@ -172,7 +173,21 @@ module VerifactuNifValidator
       </soapenv:Envelope>
     SOAP
 
-    return message.strip
+    message_debug = <<-SOAP
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+    xmlns:vnif="http://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/burt/jdit/ws/VNifV2Ent.xsd">
+        <soapenv:Header/>
+        <soapenv:Body>
+            <vnif:VNifV2Ent>
+                <vnif:Contribuyente>
+                    <vnif:Nif>99999999R</vnif:Nif>
+                    <vnif:Nombre>ESPANOL ESPANOL JUAN</vnif:Nombre>
+                </vnif:Contribuyente>
+            </vnif:VNifV2Ent>
+        </soapenv:Body>
+    </soapenv:Envelope>
+    SOAP
+    return message_debug.strip
 
     end
 
