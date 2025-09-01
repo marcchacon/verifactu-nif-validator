@@ -11,13 +11,14 @@ module AeatNifValidator
 
     # Builds the XML document
     def self.build
+      @@contribuyentes ||= []
       raise AeatNifValidator::AeatNifValidatorError, 'No contribuyentes to build' if @@contribuyentes.empty?
       AeatNifValidator::AeatNifXmlBuilder.build(@@contribuyentes)
     end
 
-    # Validates one nif
+    # Validates ONE
     def self.validar_nif(nif:, name: nil)
-      add_nif(nif, name: name)
+      add_nif(nif: nif, name: name)
       build
     end
 

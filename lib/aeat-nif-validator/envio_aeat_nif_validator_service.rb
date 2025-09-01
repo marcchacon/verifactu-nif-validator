@@ -16,11 +16,11 @@ module AeatNifValidator
         raise AeatNifValidator::AeatNifValidatorError, 'XML del registro de facturación no puede estar vacío'
       end
 
-      #validate_schema = validate_schema(reg_factu_xml)
-      #unless validate_schema[:valid]
-      #  raise AeatNifValidator::AeatNifValidatorError, "El XML del registro de facturación no es válido según el esquema XSD: "\
-      #                       "#{validate_schema[:error_type]} - #{validate_schema[:errors].join(', ')}"
-      #end
+      validate_schema = AeatNifValidator::Helpers::ValidaValidatorXSD.execute(reg_factu_xml)
+      unless validate_schema[:valid]
+        raise AeatNifValidator::AeatNifValidatorError, "El XML del registro de facturación no es válido según el esquema XSD: "\
+                             "#{validate_schema[:error_type]} - #{validate_schema[:errors].join(', ')}"
+      end
 
       # Construcción del request SOAP
       request_str = build_soap_request(reg_factu_xml)
@@ -144,15 +144,6 @@ module AeatNifValidator
           "Content-Type" => "text/xml;charset=UTF-8"
         }
       )
-
-    end
-
-    #
-    #
-    #
-    def validate_schema(registro_xml)
-
-      raise "Implement this method in a subclass"
 
     end
 
