@@ -2,6 +2,10 @@ require 'spec_helper'
 
 RSpec.describe AeatNifValidator::AeatNifBuilder do
 
+  before do
+    AeatNifValidator::AeatNifBuilder.class_variable_set(:@@contribuyentes, [])
+  end
+
   describe '#initialize' do
 
     it "genera un xml de un NIF (validar_nif)" do
