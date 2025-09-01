@@ -1,3 +1,3 @@
-module Verifactu
+module Aeat
   VERSION = "0.1.0"
 end

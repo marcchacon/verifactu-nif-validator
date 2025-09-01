@@ -1,4 +1,4 @@
-module VerifactuNifValidator
+module AeatNifValidator
   module Helpers
     class ValidaValidatorXSD
 
@@ -6,7 +6,7 @@ module VerifactuNifValidator
       # @param xml_str [String] XML string to validate
       # @return [Hash] Result of the validation, with keys :valid, :errors, and :error_type if applicable
       # @example
-      #   result = Verifactu::Helpers::ValidaConsultaXSD.execute(xml_str)
+      #   result = Aeat::Helpers::ValidaConsultaXSD.execute(xml_str)
       #   if result[:valid]
       #     puts "XML is valid"
       #   else
@@ -18,7 +18,7 @@ module VerifactuNifValidator
         # Cargar el esquema XSD desde el fichero local
         xsd_dir = File.expand_path('../../../../', __FILE__)
         xsd_path = File.join(xsd_dir, 'VNifV2Ent.xsd')
-        xsd = VerifactuNifValidator::Helpers::XsdLoader.new(xsd_path).load
+        xsd = AeatNifValidator::Helpers::XsdLoader.new(xsd_path).load
 
         # Parsear el XML de entrada
         xml_doc = Nokogiri::XML(xml_str) { |config| config.strict }

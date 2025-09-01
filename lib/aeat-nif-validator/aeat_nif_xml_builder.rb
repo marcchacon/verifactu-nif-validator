@@ -1,9 +1,9 @@
-module VerifactuNifValidator
-  class VerifactuNifXmlBuilder
+module AeatNifValidator
+  class AeatNifXmlBuilder
     def self.build(contribuyentes)
-      raise VerifactuNifValidator::VerifactuNifValidatorError, 'contribuyentes is required' if contribuyentes.nil?
-      raise VerifactuNifValidator::VerifactuNifValidatorError, 'contribuyentes must be an array of contribuyentes' unless contribuyentes.is_a?(Array)
-      raise VerifactuNifValidator::VerifactuNifValidatorError, 'contribuyentes must not be empty' if contribuyentes.empty?
+      raise AeatNifValidator::AeatNifValidatorError, 'contribuyentes is required' if contribuyentes.nil?
+      raise AeatNifValidator::AeatNifValidatorError, 'contribuyentes must be an array of contribuyentes' unless contribuyentes.is_a?(Array)
+      raise AeatNifValidator::AeatNifValidatorError, 'contribuyentes must not be empty' if contribuyentes.empty?
 
       # Create the XML document
       xml_document = Nokogiri::XML('<vnif:VNifV2Ent/>')
@@ -23,8 +23,8 @@ module VerifactuNifValidator
     private
 
     def self.agregar_contribuyente(xml_document, contribuyente)
-      raise VerifactuNifValidator::VerifactuNifValidatorError, 'xml_document must be an instance of Nokogiri::XML::Document' unless xml_document.is_a?(Nokogiri::XML::Document)
-      raise VerifactuNifValidator::VerifactuNifValidatorError, 'contribuyente must be an instance of VerifactuNifValidator::Contribuyente' unless contribuyente.is_a?(VerifactuNifValidator::Contribuyente)
+      raise AeatNifValidator::AeatNifValidatorError, 'xml_document must be an instance of Nokogiri::XML::Document' unless xml_document.is_a?(Nokogiri::XML::Document)
+      raise AeatNifValidator::AeatNifValidatorError, 'contribuyente must be an instance of AeatNifValidator::Contribuyente' unless contribuyente.is_a?(AeatNifValidator::Contribuyente)
 
       contribuyente_element = Nokogiri::XML::Node.new('vnif:Contribuyente', xml_document)
       contribuyente_nif_element = Nokogiri::XML::Node.new('vnif:Nif', xml_document)

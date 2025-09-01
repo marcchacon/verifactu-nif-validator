@@ -1,15 +1,15 @@
 
 
-require_relative "lib/verifactu-nif-validator/version"
+require_relative "lib/aeat-nif-validator/version"
 
 Gem::Specification.new do |spec|
-  spec.name = "verifactu-nif-validator"
-  spec.version = Verifactu::VERSION
+  spec.name = "aeat-nif-validator"
+  spec.version = Aeat::VERSION
   spec.authors = ["Mybooking"]
   spec.email = ["info@mybooking.es"]
 
-  spec.summary = "Verifactu Ruby Gem"
-  spec.description = "Verifactu ruby Gem"
+  spec.summary = "Aeat Ruby Gem"
+  spec.description = "Aeat ruby Gem"
   spec.homepage = "https://mybooking.es"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 2.6.0"

@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 
-# Specify your gem's dependencies in verifactu-nif-validator-rb.gemspec
+# Specify your gem's dependencies in aeat-nif-validator-rb.gemspec
 gemspec
 
 gem "rake", "~> 13.0"

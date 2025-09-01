@@ -1,5 +1,5 @@
 require 'nokogiri'
-module VerifactuNifValidator
+module AeatNifValidator
   module Helpers
     class XsdLoader
 

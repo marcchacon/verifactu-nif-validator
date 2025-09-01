@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    verifactu-nif-validator (0.1.0)
+    aeat-nif-validator (0.1.0)
       erb
       nokogiri (= 1.17.2)
       rack (~> 2.2)
@@ -116,7 +116,7 @@ PLATFORMS
 DEPENDENCIES
   rake (~> 13.0)
   rspec (~> 3.0)
-  verifactu-nif-validator!
+  aeat-nif-validator!
 
 BUNDLED WITH
    2.5.3

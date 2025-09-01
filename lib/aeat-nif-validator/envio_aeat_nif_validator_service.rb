@@ -1,31 +1,31 @@
-module VerifactuNifValidator
-  class EnvioVerifactuNifValidatorService
+module AeatNifValidator
+  class EnvioAeatNifValidatorService
 
     URL = 'https://www1.agenciatributaria.gob.es/wlpl/BURT-JDIT/ws/VNifV2SOAP'
 
-    # Envia un registro de facturación a Verifactu
+    # Envia un registro de facturación a Aeat
     # @param reg_factu_xml [String] XML del registro de facturación
     # @param client_cert [String] Certificado del cliente en formato PEM
     # @param client_key [String] Clave privada del cliente en formato PEM
     # @param cert_password [String, nil] Contraseña del certificado (opcional)
     #
-    def send_verifactu(reg_factu_xml:, certificado_sello: false , client_cert: nil, client_key:, cert_password: nil)
+    def send_aeat(reg_factu_xml:, certificado_sello: false , client_cert: nil, client_key:, cert_password: nil)
 
       # Validación del XML
       if reg_factu_xml.nil? || reg_factu_xml.empty?
-        raise VerifactuNifValidator::VerifactuNifValidatorError, 'XML del registro de facturación no puede estar vacío'
+        raise AeatNifValidator::AeatNifValidatorError, 'XML del registro de facturación no puede estar vacío'
       end
 
       #validate_schema = validate_schema(reg_factu_xml)
       #unless validate_schema[:valid]
-      #  raise VerifactuNifValidator::VerifactuNifValidatorError, "El XML del registro de facturación no es válido según el esquema XSD: "\
+      #  raise AeatNifValidator::AeatNifValidatorError, "El XML del registro de facturación no es válido según el esquema XSD: "\
       #                       "#{validate_schema[:error_type]} - #{validate_schema[:errors].join(', ')}"
       #end
 
       # Construcción del request SOAP
       request_str = build_soap_request(reg_factu_xml)
       p request_str
-      # Envío a Verifactu
+      # Envío a Aeat
       url = URL
       send_request(url: url,
                    xml: request_str,
@@ -39,8 +39,8 @@ module VerifactuNifValidator
     private
 
     #
-    # Sends a request to the Verifactu service using Savon
-    # @param url [String] URL del servicio Verifactu
+    # Sends a request to the Aeat service using Savon
+    # @param url [String] URL del servicio Aeat
     # @param xml [String] XML del registro de facturación
     # @param client_cert [String] Certificado del cliente en formato PEM
     # @param client_key [String] Clave privada del cliente en formato PEM
@@ -56,7 +56,7 @@ module VerifactuNifValidator
     #
     # @return [Hash] Resultado de la petición con claves :result, :body, :fault, :http_code, :error, :backtrace
     #
-    # @raise [Verifactu::VerifactuError] Si el XML está vacío o si el entorno no es válido
+    # @raise [Aeat::AeatError] Si el XML está vacío o si el entorno no es válido
     #
     # @raise [Savon::SOAPFault] Si hay un error en la respuesta SOAP
     # @raise [Savon::HTTPError] Si hay un error HTTP al hacer la petición
@@ -71,7 +71,7 @@ module VerifactuNifValidator
 
       begin
         response = client.call(
-          :verifactu,
+          :aeat,
           xml: xml
         )
 
@@ -104,14 +104,14 @@ module VerifactuNifValidator
 
     end
 
-    # Builds a Savon client for the Verifactu service
-    # @param url [String] URL del servicio Verifactu
+    # Builds a Savon client for the Aeat service
+    # @param url [String] URL del servicio Aeat
     # @param client_cert [String] Certificado del cliente en formato PEM
     # @param client_key [String] Clave privada del cliente en formato PEM
     # @param cert_password [String, nil] Contraseña del certificado (opcional)
     # @return [Savon::Client] Cliente Savon configurado
     #
-    # @raise [Verifactu::VerifactuError] Si el certificado o la clave están vacíos
+    # @raise [Aeat::AeatError] Si el certificado o la clave están vacíos
     #
     # @example
     #   client = build_savon_client(
@@ -157,8 +157,8 @@ module VerifactuNifValidator
     end
 
     #
-    # Builds the SOAP request for Verifactu
-    # @param xml [String] XML del registro de envío a Verifactu
+    # Builds the SOAP request for Aeat
+    # @param xml [String] XML del registro de envío a Aeat
     # @return [String] SOAP request
     #
     def build_soap_request(xml)
