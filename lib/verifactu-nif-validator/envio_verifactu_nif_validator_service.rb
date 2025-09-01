@@ -9,7 +9,7 @@ module VerifactuNifValidator
     # @param client_key [String] Clave privada del cliente en formato PEM
     # @param cert_password [String, nil] Contraseña del certificado (opcional)
     #
-    def send_verifactu(reg_factu_xml:, certificado_sello: , client_cert:, client_key:, cert_password: nil)
+    def send_verifactu(reg_factu_xml:, certificado_sello: false , client_cert: nil, client_key:, cert_password: nil)
 
       # Validación del XML
       if reg_factu_xml.nil? || reg_factu_xml.empty?
@@ -164,30 +164,16 @@ module VerifactuNifValidator
     def build_soap_request(xml)
 
       message = <<-SOAP
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-        xmlns:vnif="http://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/burt/jdit/ws/VNifV2Ent.xsd">
-        <soapenv:Header/>
-        <soapenv:Body>
-          #{xml}
-        </soapenv:Body>
-      </soapenv:Envelope>
-    SOAP
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+          xmlns:vnif="http://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/burt/jdit/ws/VNifV2Ent.xsd">
+          <soapenv:Header/>
+          <soapenv:Body>
+            #{xml}
+          </soapenv:Body>
+        </soapenv:Envelope>
+      SOAP
 
-    message_debug = <<-SOAP
-    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-    xmlns:vnif="http://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/burt/jdit/ws/VNifV2Ent.xsd">
-        <soapenv:Header/>
-        <soapenv:Body>
-            <vnif:VNifV2Ent>
-                <vnif:Contribuyente>
-                    <vnif:Nif>99999999R</vnif:Nif>
-                    <vnif:Nombre>ESPANOL ESPANOL JUAN</vnif:Nombre>
-                </vnif:Contribuyente>
-            </vnif:VNifV2Ent>
-        </soapenv:Body>
-    </soapenv:Envelope>
-    SOAP
-    return message_debug.strip
+      message
 
     end
 
