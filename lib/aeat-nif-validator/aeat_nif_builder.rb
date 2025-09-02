@@ -16,7 +16,7 @@ module AeatNifValidator
       AeatNifValidator::AeatNifXmlBuilder.build(@@contribuyentes)
     end
 
-    # Validates ONE
+    # Validates one nif and returns the XML document
     def self.validar_nif(nif:, name: nil)
       add_nif(nif: nif, name: name)
       build

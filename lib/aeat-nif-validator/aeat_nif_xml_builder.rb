@@ -1,5 +1,10 @@
 module AeatNifValidator
   class AeatNifXmlBuilder
+    #
+    # Builds an XML document from an array of contribuyentes
+    # @param contribuyentes [Array<AeatNifValidator::Contribuyente>] the array of contribuyentes
+    # @return [Nokogiri::XML::Document] the generated XML document
+    #
     def self.build(contribuyentes)
       raise AeatNifValidator::AeatNifValidatorError, 'contribuyentes is required' if contribuyentes.nil?
       raise AeatNifValidator::AeatNifValidatorError, 'contribuyentes must be an array of contribuyentes' unless contribuyentes.is_a?(Array)
@@ -22,6 +27,7 @@ module AeatNifValidator
 
     private
 
+    # Adds a contribuyente to the XML document
     def self.agregar_contribuyente(xml_document, contribuyente)
       raise AeatNifValidator::AeatNifValidatorError, 'xml_document must be an instance of Nokogiri::XML::Document' unless xml_document.is_a?(Nokogiri::XML::Document)
       raise AeatNifValidator::AeatNifValidatorError, 'contribuyente must be an instance of AeatNifValidator::Contribuyente' unless contribuyente.is_a?(AeatNifValidator::Contribuyente)

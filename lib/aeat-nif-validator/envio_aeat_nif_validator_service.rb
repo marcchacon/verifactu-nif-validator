@@ -4,26 +4,26 @@ module AeatNifValidator
     URL = 'https://www1.agenciatributaria.gob.es/wlpl/BURT-JDIT/ws/VNifV2SOAP'
 
     # Envia un registro de facturación a Aeat
-    # @param reg_factu_xml [String] XML del registro de facturación
+    # @param consulta_xml [String] XML con los contribuyentes a validar
     # @param client_cert [String] Certificado del cliente en formato PEM
     # @param client_key [String] Clave privada del cliente en formato PEM
     # @param cert_password [String, nil] Contraseña del certificado (opcional)
     #
-    def send_aeat(reg_factu_xml:, certificado_sello: false , client_cert: nil, client_key:, cert_password: nil)
+    def send_aeat(consulta_xml:, certificado_sello: false , client_cert: nil, client_key:, cert_password: nil)
 
       # Validación del XML
-      if reg_factu_xml.nil? || reg_factu_xml.empty?
+      if consulta_xml.nil? || consulta_xml.empty?
         raise AeatNifValidator::AeatNifValidatorError, 'XML del registro de facturación no puede estar vacío'
       end
 
-      validate_schema = AeatNifValidator::Helpers::ValidaValidatorXSD.execute(reg_factu_xml)
+      validate_schema = AeatNifValidator::Helpers::ValidaValidatorXSD.execute(consulta_xml)
       unless validate_schema[:valid]
         raise AeatNifValidator::AeatNifValidatorError, "El XML del registro de facturación no es válido según el esquema XSD: "\
                              "#{validate_schema[:error_type]} - #{validate_schema[:errors].join(', ')}"
       end
 
       # Construcción del request SOAP
-      request_str = build_soap_request(reg_factu_xml)
+      request_str = build_soap_request(consulta_xml)
       p request_str
       # Envío a Aeat
       url = URL
